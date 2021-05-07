@@ -3,4 +3,18 @@ _transform: true
 
 services:
   - name: example-service
-    url: https://mockbin.org
+    url: https://api.github.com/repos/kong/kong
+    plugins:
+      - name: json-to-yaml
+    routes:
+      - name: github-yaml
+        paths:
+          - /github
+  - name: pokemon
+    url: https://pokeapi.co/api/v2/evolution-chain/67/
+    plugins:
+      - name: pokemon-evolution
+    routes:
+      - name: pokemon-route
+        paths:
+          - /pokemon
