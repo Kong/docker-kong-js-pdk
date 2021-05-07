@@ -1,0 +1,34 @@
+version: "3.7"
+
+services:
+  kong:
+    build:
+      dockerfile: Dockerfile
+    user: "${KONG_USER:-kong}"
+    volumes:
+      - ./plugins:/usr/local/kong/js-plugins
+      - ./config:/etc/kong/declarative
+    environment:
+      # Use the config defined in config/kong.yml
+      KONG_DATABASE: "off"
+      KONG_DECLARATIVE_CONFIG: /etc/kong/declarative/kong.yml
+      # Show all output in the terminal when running with Docker
+      KONG_ADMIN_ACCESS_LOG: /dev/stdout
+      KONG_ADMIN_ERROR_LOG: /dev/stderr
+      KONG_PROXY_ACCESS_LOG: /dev/stdout
+      KONG_PROXY_ERROR_LOG: /dev/stderr
+      # Enable the JS plugin server
+      KONG_PLUGINSERVER_NAMES: js
+      KONG_PLUGINSERVER_JS_SOCKET: /usr/local/kong/js_pluginserver.sock
+      KONG_PLUGINSERVER_JS_START_CMD: /usr/bin/kong-js-pluginserver -v --plugins-directory /usr/local/kong/js-plugins
+      KONG_PLUGINSERVER_JS_QUERY_CMD: /usr/bin/kong-js-pluginserver --plugins-directory /usr/local/kong/js-plugins --dump-all-plugins
+      # Allow plugins to be used. The plugin name is your JS file name e.g. hello.js
+      KONG_PLUGINS: bundled
+    ports:
+      - "8000:8000/tcp"
+    healthcheck:
+      test: ["CMD", "kong", "health"]
+      interval: 10s
+      timeout: 10s
+      retries: 10
+    restart: on-failure
