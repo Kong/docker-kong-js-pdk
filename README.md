@@ -20,6 +20,15 @@ Kong's documentation can be found at [https://docs.konghq.com/][kong-docs-url].
 
 ## Issues
 
+Prior to executing the command above please ensure that the file `.gitkeep` is removed from the plugins directory, this will avoid an error which will stop the container from starting correctly.
+If you see this error then you are hitting this issue
+```
+kong_1  | /usr/local/bin/kong-js-pluginserver --plugins-directory /usr/local/kong/js-plugins --dump-all-plugins
+kong_1  | 2022-09-05T18:40:10.134Z [WARN] error loading plugin ".gitkeep" from /usr/local/kong/js-plugins/.gitkeep: TypeError: Cannot read properties of undefined (reading 'prototype')
+kong_1  |     at new Module (/usr/local/lib/node_modules/kong-pdk/lib/mod.js:32:27)
+kong_1  |     at Server.loadPlugins (/usr/local/lib/node_modules/kong-pdk/server.js:81:21)
+```
+
 If you have any problems with or questions about this image, please contact us through a [GitHub issue][github-new-issue].
 
 ## Contributing
