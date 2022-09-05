@@ -4,3 +4,8 @@ _transform: true
 services:
   - name: example-service
     url: https://mockbin.org
+    routes:
+      - name: jspath
+        paths:
+        - /
+        
