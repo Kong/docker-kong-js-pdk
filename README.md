@@ -11,6 +11,8 @@ This Docker Compose template provisions a Kong container using Kong declarative 
 To run this template execute:
 
 ```shell
+$ cd plugins
+$ npm install
 $ docker-compose up
 ```
 
