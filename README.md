@@ -12,7 +12,7 @@ To run this template execute:
 
 ```shell
 $ cd plugins
-$ npm install
+$ npm ci
 $ docker-compose up
 ```
 
